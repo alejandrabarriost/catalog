@@ -24,6 +24,7 @@ import { ReservationSchema } from "@/backend/models/reservation";
 import { useEffect, useRef } from "react";
 import { DatePickerWithRange } from "./DatePicker";
 import { DateRange } from "react-day-picker";
+import { useSearchParams } from "next/navigation";
 
 const formSchema = ReservationSchema;
 
@@ -42,6 +43,8 @@ export function ReservationForm({
   });
 
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const params = useSearchParams();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await fetch("/api/reservation", {
@@ -72,6 +75,12 @@ export function ReservationForm({
       buttonRef.current.focus();
     }
   }, [productId]);
+
+  useEffect(() => {
+    if (params?.has("product")) {
+      form.setValue("product", params.get("product")!);
+    }
+  }, [params]);
 
   return (
     <Card className={className}>

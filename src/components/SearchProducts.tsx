@@ -11,10 +11,13 @@ import { Label } from "@/UI/components/ui/label";
 
 import { Badge } from "@/UI/components/ui/badge";
 import { Card, CardContent } from "@/UI/components/ui/card";
+import { useRouter } from "next/navigation";
 
 interface SearchProductsProps {
   products: Omit<z.infer<typeof ProductSchema>, "embedding">[];
 }
+
+const supabaseBucketUrl = process.env.NEXT_PUBLIC_SUPABASE_IMAGES_BUCKET;
 
 const makeQuery = async (query: string) => {
   const request = await fetch(`/api/product?query=${query}`, {
@@ -40,6 +43,8 @@ export default function SearchProducts() {
   const [resuls, setResults] = useState<SearchProductsProps["products"]>([]);
 
   const [products, setProducts] = useState<SearchProductsProps["products"]>([]);
+
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -98,9 +103,24 @@ export default function SearchProducts() {
               {resuls.map(product => (
                 <div className="p-1" key={product.id}>
                   <Card>
-                    <CardContent className="flex items-center justify-center p-2 cursor-pointer">
+                    <CardContent
+                      className="flex items-center justify-center p-2 cursor-pointer gap-4"
+                      onClick={() => router.push(`/rent?product=${product.id}`)}
+                    >
+                      <img
+                        src={`${supabaseBucketUrl}/${product.image}`}
+                        alt={product.name}
+                        className="w-8 h-8 object-cover border-r-2 border-gray-200 mr-4"
+                        fetchPriority="low"
+                      />
                       <span className="text-xl font-semibold">
                         {product.name}
+                      </span>
+                      <span className="text-md font-ligth">
+                        {product.description}
+                      </span>
+                      <span className="text-md font-extrabold">
+                        ${product.price} USD
                       </span>
                       <Badge variant="default" className="text-[10px]">
                         {product.category}
