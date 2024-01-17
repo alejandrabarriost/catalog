@@ -10,10 +10,16 @@ import { Button } from "@/UI/components/ui/button";
 import { Clipboard } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { z } from "zod";
+import { ProductSchema } from "@/backend/models/product";
 
 const supabaseBucketUrl = process.env.NEXT_PUBLIC_SUPABASE_IMAGES_BUCKET;
 
-export default function CarouselItemComp({ product }) {
+export default function CarouselItemComp({
+  product,
+}: {
+  product: Omit<z.infer<typeof ProductSchema>, "embedding">;
+}) {
   const [open, setOpen] = useState(false);
 
   async function copyIdToClipboard(id: string) {

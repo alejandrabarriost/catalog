@@ -39,10 +39,16 @@ export function ProductForm({ className }: { className?: string }) {
     resolver: zodResolver(formSchema),
   });
 
+  const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (imageFile instanceof File) {
+      setIsLoading(true);
+
       const { data, error } = await supabase.storage
         .from("catalog_images")
         .upload(nanoid(), imageFile, {
@@ -56,7 +62,8 @@ export function ProductForm({ className }: { className?: string }) {
         body: JSON.stringify({ ...values, image: data.path }),
       });
 
-      window.dispatchEvent(new Event("refetch-search-products"));
+      setIsLoading(false);
+      router.replace("/rent");
     }
   }
 
@@ -151,7 +158,9 @@ export function ProductForm({ className }: { className?: string }) {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button disabled={isLoading} type="submit">
+              Submit
+            </Button>
           </form>
         </Form>
       </CardContent>

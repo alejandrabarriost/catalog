@@ -60,16 +60,6 @@ export default function SearchProducts() {
     getAllProducts().then(data => {
       setProducts(data);
     });
-
-    window.addEventListener("refetch-search-products", () => {
-      getAllProducts().then(data => {
-        setProducts(data);
-      });
-    });
-
-    () => {
-      window.removeEventListener("refetch-search-products", () => {});
-    };
   }, []);
 
   return (
