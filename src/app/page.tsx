@@ -23,7 +23,10 @@ export default async function Home() {
         className="bg-cover bg-center bg-no-repeat h-[900px] flex flex-col justify-center mt-6"
       >
         <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-5xl max-w-96 ml-10">
-          Tools INC. Rent Tools for your projects at the best price.
+          Tools INC.
+        </h1>
+        <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-5xl max-w-96 ml-10">
+          Rent Tools for your projects at the best price.
         </h1>
         <div className="flex gap-4 ml-10">
           <Link href="/rent">

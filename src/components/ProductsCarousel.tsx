@@ -63,7 +63,7 @@ export default function ProductsCarousel({
                     <img
                       src={`${supabaseBucketUrl}/${product.image}`}
                       alt={product.name}
-                      className="w-24 h-24 object-cover border-r-2 border-gray-200 mr-4"
+                      className="w-16 h-16 object-cover border-r-2 border-gray-200 mr-4"
                       fetchPriority="low"
                     />
 

@@ -15,6 +15,18 @@ export default async function handler(
   }
 
   if (req.method === "GET") {
+    if (!req.query.query) {
+      const products = await supabase
+        .from("products")
+        .select("id, name, price, description, image, category");
+
+      if (products.error) {
+        return res.status(500);
+      }
+
+      return res.status(200).send(products.data);
+    }
+
     const { data, error } = await searchProducts(req.query.query as string);
 
     if (error) {

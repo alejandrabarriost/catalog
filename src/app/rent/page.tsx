@@ -10,14 +10,6 @@ export default async function Rent({
 }: {
   searchParams: Record<string, string | undefined>;
 }) {
-  const products = await supabase
-    .from("products")
-    .select("id, name, price, description, image, category");
-
-  if (products.error) {
-    throw products.error;
-  }
-
   return (
     <main className="container mt-2 mb-10">
       <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight mb-2">
@@ -26,7 +18,7 @@ export default async function Rent({
       <Separator className="mb-10" />
       <Suspense fallback={<div>Loading...</div>}>
         <div className="mb-10">
-          <SearchProducts products={products.data} />
+          <SearchProducts />
         </div>
       </Suspense>
       <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight mb-2">

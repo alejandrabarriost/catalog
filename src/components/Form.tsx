@@ -39,8 +39,6 @@ export function ProductForm({ className }: { className?: string }) {
     resolver: zodResolver(formSchema),
   });
 
-  const { refresh } = useRouter();
-
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -58,7 +56,7 @@ export function ProductForm({ className }: { className?: string }) {
         body: JSON.stringify({ ...values, image: data.path }),
       });
 
-      refresh();
+      window.dispatchEvent(new Event("refetch-search-products"));
     }
   }
 

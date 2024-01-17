@@ -1,7 +1,7 @@
 "use client";
 
 import { ProductSchema } from "@/backend/models/product";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import ProductsCarousel from "./ProductsCarousel";
 import { Skeleton } from "@/UI/components/ui/skeleton";
@@ -26,8 +26,20 @@ const makeQuery = async (query: string) => {
   return response as SearchProductsProps["products"];
 };
 
-export default function SearchProducts({ products }: SearchProductsProps) {
+const getAllProducts = async () => {
+  const request = await fetch(`/api/product`, {
+    method: "GET",
+  });
+
+  const response = await request.json();
+
+  return response as SearchProductsProps["products"];
+};
+
+export default function SearchProducts() {
   const [resuls, setResults] = useState<SearchProductsProps["products"]>([]);
+
+  const [products, setProducts] = useState<SearchProductsProps["products"]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,6 +50,22 @@ export default function SearchProducts({ products }: SearchProductsProps) {
     setResults(results);
     setIsLoading(false);
   }, 1000);
+
+  useEffect(() => {
+    getAllProducts().then(data => {
+      setProducts(data);
+    });
+
+    window.addEventListener("refetch-search-products", () => {
+      getAllProducts().then(data => {
+        setProducts(data);
+      });
+    });
+
+    () => {
+      window.removeEventListener("refetch-search-products", () => {});
+    };
+  }, []);
 
   return (
     <div>
