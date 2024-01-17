@@ -1,5 +1,5 @@
 
-### Catalog API
+# Catalog API
 Esto es un proyecto de [Next.js](https://nextjs.org/) creado con [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Architectura
