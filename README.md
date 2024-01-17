@@ -17,7 +17,7 @@ Este proyecto esta hecho con Next.js como framework de frontend y backend, y Sup
   - Tailwind
 - ### Backend
   - Node.js
-  - Supabase
+  - Supabase(Blob Storage/Database(PG))
   - OpenAI SDK
   - Vercel(deployments)
 
