@@ -16,8 +16,8 @@ export default async function handler(
     await resend.emails.send({
       from: "Tools, INC. <onboarding@resend.dev>",
       to: [body.email],
-      subject: "Reserve Confirmation Received",
-      html: "<strong>Your reserve has been successfully confirmed. thanks for using our service</strong>",
+      subject: "Rent Order Confirmed",
+      html: "<strong>Your reserve has been successfully confirmed. thanks for using our service. --- Tools, INC.</strong>",
     });
 
     return res.status(201).json(response);
